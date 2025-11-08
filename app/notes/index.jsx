@@ -1,83 +1,41 @@
-import { useState } from "react";
-import { FlatList, Modal, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { useState } from 'react';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+
+import AddNoteModal from '../../components/AddNoteModal';
+import NoteList from '../../components/NoteList';
 
 const NoteScreen = () => {
-  const [notes, setNotes] = useState([
-    { id: 1, text: "nota uno" },
-    { id: 2, text: "nota dos" },
-    { id: 3, text: "nota tres" },
-  ]);
+  const [notes, setNotes] = useState([]);
 
   const [modalVisible, setModalVisible] = useState(false);
-  const [newNote, setNewNote] = useState("");
+  const [newNote, setNewNote] = useState('');
 
   const addNewNote = () => {
-    if(newNote.trim()==='') return
-  
-    setNotes((prevNotes) =>[
-      ...prevNotes,
-      {id: Date.now.toString(), text: newNote}
-    ])
+    if (!newNote || newNote.trim() === '') return;
 
-    setNewNote('')
-  }
-  
+    setNotes((prevNotes) => [
+      ...prevNotes,
+      { id: Date.now().toString(), text: newNote },
+    ]);
+    setNewNote('');
+    setModalVisible(false);
+  };
 
   return (
-    <View>
-      <FlatList
-        data={notes}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => (
-          <View style={styles.noteItem}>
-            <Text style={styles.textItem}>{item.text} </Text>
-          </View>
-        )}
-      />
+    <View style={styles.container}>
+      <NoteList notes={notes} />
       <TouchableOpacity
-        style={styles.addButon}
-        on
-        Press={() => setModalVisible(true)}
+        style={styles.agregarButton}
+        onPress={() => setModalVisible(true)}
       >
-        <Text style={styles.addButtomText}>Agregar</Text>
+        <Text style={styles.addButtonText}>agregar</Text>
       </TouchableOpacity>
-      {
-        <Modal
-          visible={modalVisible}
-          animationType="slide"
-          transparent
-          onRequestClose={() => setModalVisible(false)}
-        >
-          <View style={styles.modalOverlay}>
-            <View style={styles.modalContent}>
-              <Text style={styles.modalTitle}>Agregar una Nota Nueva</Text>
-              <TextInput
-                style={styles.input}
-                placeholder="Teclear una descripcion"
-                placeholderTextColor="#aaa"
-                onCHangeText={setNewNote}
-              />
-              <View style={styles.modalButtons}>
-                <TouchableOpacity
-                  style={styles.cancelButton}
-                  onPress={() => setModalVisible(false)}
-                >
-                  <Text style={styles.buttonText}>Cancelar</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  style={styles.cancelButton}
-                  onPress={() => {
-                    addNewNote();
-                    setModalVisible(false);
-                  }}
-                >
-                  <Text style={styles.buttonText}>Agregar</Text>
-                </TouchableOpacity>
-              </View>
-            </View>
-          </View>
-        </Modal>
-      }
+      <AddNoteModal
+        modalVisible={modalVisible}
+        setModalVisible={setModalVisible}
+        setNewNote={setNewNote}
+        addNewNote={addNewNote}
+      />
     </View>
   );
 };
@@ -88,48 +46,18 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    backgroundColor: "#ffffffff",
+    backgroundColor: '#7e7e7e',
   },
-  noteItem: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    backgroundColor: "rgba(72, 255, 133, 0.87)",
-    padding: 15,
-    borderRadius: 5,
-    marginVertical: 5,
-  },
-  noteText: {
-    fontSize: 18,
-  },
-  addButon: {
-    position: "absolute",
-    bottom: 50,
+  agregarButton: {
+    backgroundColor: '#ffff',
+    borderRadius: 15,
+    position: 'absolute',
+    bottom: 20,
     right: 20,
-    left: 80,
-    backgroundcolor: "#666",
-    padding: 15,
-    borderRadius: 5,
-    alignItems: "center",
+    padding: 10,
   },
-  addButtomText: {
-    color: "#fff",
+  addButtonText: {
     fontSize: 18,
-    fontWeight: "bold",
+    fontWeight: 'bold',
   },
-  modalButtons:{
-    flexDirection:'row',
-    justifyContent:'space-between'
-  },
-  cancelButton:{
-    backgroundColor:'#ccc',
-    padding:10,
-    borderRadius:5,
-    marginRight:10,
-    alignItems:'center'
-  },
-  cancelButtonText:{
-    fontSize:16,
-    color:'#333',
-
-  }
 });

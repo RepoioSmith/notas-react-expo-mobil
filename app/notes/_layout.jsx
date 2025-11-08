@@ -1,19 +1,12 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { Stack } from 'expo-router';
 
-const NotesScreen = () => {
+const noteLayout = () => {
   return (
-    <View style={styles.container}>
-      <Text>index</Text>
-    </View>
-  )
-}
+    <Stack>
+      <Stack.Screen name="index" options={{ headerShown: false }} />
+      <Stack.Screen name="details" options={{ title: 'Detalles' }} />
+    </Stack>
+  );
+};
 
-export default NotesScreen
-
-const styles = StyleSheet.create({
-    container:{
-        flex:1,
-        padding:20,
-        backgroundColor:'#ffffffff'
-    }
-})
+export default noteLayout;

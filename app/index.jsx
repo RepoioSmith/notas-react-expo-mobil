@@ -1,52 +1,57 @@
-import { useRouter } from "expo-router";
-import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import Ballerina from '../assets/images/ballerina.jpg';
+import ballerina from '@/assets/images/ballerina.jpg';
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
+import { router } from 'expo-router';
 
 const HomeScreen = () => {
-  const router = useRouter();
   return (
     <View style={styles.container}>
-      <Image source={Ballerina} style={styles.image}/>
-      <Text style={styles.titulo}>Bienvenido a la Nuestra Super Aplicacion</Text>
-      <Text style={styles.subtitulo}>Captura tus notas en cualquier lugar y en cualquier momento</Text>
-      <Text>Edita tus notas</Text>
-      <TouchableOpacity style = {styles.button} onPress={()=>router.push('./notes')}>
-        <Text>Notas</Text>
-      </TouchableOpacity>  
+      <Image style={styles.image} source={ballerina} />
+      <Text style={styles.titulo}>Madre mia Willy chaval</Text>
+      <Text style={styles.subtitulo}>
+        Observa mi foto con Willy en cualquier lugar
+      </Text>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => router.push('/notes')}
+      >
+        <Text>Iniciar</Text>
+      </TouchableOpacity>
     </View>
   );
-}
-
+};
 const styles = StyleSheet.create({
   container: {
-    flex: 1,njustifyContent: "center",nalignItems: "center",
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#0000',
   },
-  image:{
-    width:100,
-    height:100,
-    margineBottom:20,
-    borderRadius:10,
-    alignContent:'center'
+  image: {
+    width: 400,
+    height: 200,
+    marginBottom: 20,
+    borderRadius: 40,
   },
-  titulo:{
-    fontSize:24,
-    fontWeight:'bold',
-    margineBottom:10,
-    color:'#333',
-    textAlign:'center'
+  titulo: {
+    fontSize: 28,
+    fontWeight: 'bold',
+    marginBottom: 10,
+    color: '#ffff',
+    textAlign: 'center',
   },
-  subtitulo:{
-    fontSize:30,
-    fontWeight:'bold',
-    margineBottom:20,
+  subtitulo: {
+    fontSize: 15,
+    fontWeight: 'thin',
+    marginBottom: 10,
+    color: '#ffff',
+    textAlign: 'center',
   },
-  button:{
-    backgroundColor: '#cf7500ff',
-    paddingVertical:12,
-    paddingHorizontal:30,
-  }
+  button: {
+    backgroundColor: '#ffc7fa',
+    padding: 10,
+    borderRadius: 20,
+  },
+});
 
-})
-
-export default HomeScreen
+export default HomeScreen;
